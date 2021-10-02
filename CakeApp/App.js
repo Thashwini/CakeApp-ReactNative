@@ -7,6 +7,7 @@ import { createStackNavigator, TransitionPresets } from '@react-navigation/stack
 import WelcomeScreen from './screens/WelcomeScreen';
 import SigninScreen from './screens/authScreens/SigninScreen';
 import HomeScreen from './screens/HomeScreen';
+import RootClientTabs from './navigation/ClientTabs';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -32,8 +33,8 @@ export default function App() {
           }}
             />
             <Stack.Screen
-            name='HomeScreen'
-            component={HomeScreen}
+            name='RootClientTabs'
+            component={RootClientTabs}
             options={{
               headerShown:false,
               ...TransitionPresets.RevealFromBottomAndroid

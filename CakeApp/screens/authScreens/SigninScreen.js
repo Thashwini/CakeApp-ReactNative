@@ -62,7 +62,7 @@ export default function SigninScreen({navigation}) {
                         marginLeft='40'
                         marginRight='40'
                         style={styles.btn}
-                        onPress={()=>{navigation.navigate('HomeScreen')}}
+                        onPress={()=>{navigation.navigate('RootClientTabs')}}
                         />
 
                     </View>

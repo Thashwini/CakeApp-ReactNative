@@ -5,6 +5,7 @@ import wallpaper from '../Images/wallpaper.jpg';
 import { filterData } from '../global/Data';
 import card1 from '../Images/card1.jpg';
 import card2 from '../Images/card2.jpg'
+import { Feather } from '@expo/vector-icons'; 
 
 export default function HomeScreen() {
 
