@@ -7,7 +7,7 @@ import card1 from '../Images/card1.jpg';
 import card2 from '../Images/card2.jpg'
 import { Feather } from '@expo/vector-icons'; 
 
-export default function HomeScreen() {
+export default function HomeScreen({navigation}) {
 
     const [indexCheck, setindexCheck] = useState('0')
     return (
@@ -18,7 +18,7 @@ export default function HomeScreen() {
             backgroundColor = '#F6F7F9'
             />
             <HomeHeader
-            type='menu'
+            navigation={navigation}
             />
             <View>
                 <ImageBackground

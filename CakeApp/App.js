@@ -8,6 +8,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import SigninScreen from './screens/authScreens/SigninScreen';
 import HomeScreen from './screens/HomeScreen';
 import RootClientTabs from './navigation/ClientTabs';
+import DrawerNavigation from './navigation/DrawerNavigation';
 
 const Stack = createStackNavigator();
 export default function App() {
@@ -33,8 +34,8 @@ export default function App() {
           }}
             />
             <Stack.Screen
-            name='RootClientTabs'
-            component={RootClientTabs}
+            name='DrawerNavigation'
+            component={DrawerNavigation}
             options={{
               headerShown:false,
               ...TransitionPresets.RevealFromBottomAndroid

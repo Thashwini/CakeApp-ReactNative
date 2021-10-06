@@ -13,10 +13,12 @@ export default function HomeHeader({title,type,navigation}) {
             
             <View style={{marginLeft:10, padding:2}}>
             <Entypo 
-            name={type}
+            name='menu'
             size={24} color="black" 
             style={{alignItems:'center'}}
-            onPress= {()=>{}}  />
+            onPress= {()=>{
+            navigation.toggleDrawer()    
+            }}  />
             
             
             </View>
