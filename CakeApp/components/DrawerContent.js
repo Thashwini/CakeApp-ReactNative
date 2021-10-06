@@ -1,7 +1,7 @@
 import React from 'react'
 import { View, Text, Linking, Pressable, Alert, Switch, Button, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
-import { FontAwesome, Octicons } from '@expo/vector-icons'; 
+import { FontAwesome, Octicons, MaterialIcons } from '@expo/vector-icons'; 
 
 
 export default function DrawerContent(props) {
@@ -14,6 +14,13 @@ export default function DrawerContent(props) {
                 </View>
         
                 <DrawerItemList {...props}/>
+
+                <DrawerItem
+                label='Favorites'
+                icon= {({color,size})=>(
+                   <MaterialIcons name="favorite-outline" size={24} color='black' />
+                )}
+                />
 
                 <View style={{}}>
                     <Text style={styles.preference}>Preferences</Text>

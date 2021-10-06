@@ -6,6 +6,7 @@ import Cart from '../screens/Cart';
 import MyAccount from '../screens/MyAccount';
 import { colors } from '../global/styles';
 import FavoriteScreen from '../screens/FavoriteScreen';
+import SearchScreen from '../screens/SearchScreen';
 
 const ClientTabs = createBottomTabNavigator();
 
@@ -47,12 +48,13 @@ export default function RootClientTabs() {
              />
 
             <ClientTabs.Screen
-            name='FavoriteScreen'
-            component={FavoriteScreen}
+            name='SearchScreen'
+            component={SearchScreen}
             options={{
-                tabBarLabel:"Favorites",
+                tabBarLabel:"Search",
                 tabBarIcon:({color,size})=>{
-                    return <MaterialIcons name="favorite-outline" size={size} color={color} />
+                    return <Feather name="search" size={24} color={color} />
+                    
                 }
             }}
              />
