@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler'
-import React from 'react'
+import React, {useEffect} from 'react'
 import { View, StyleSheet, StatusBar } from 'react-native'
 import RootNavigator from './navigation/RootNavigator';
 import { NavigationContainer } from "@react-navigation/native";
@@ -9,9 +9,25 @@ import SigninScreen from './screens/authScreens/SigninScreen';
 import HomeScreen from './screens/HomeScreen';
 import RootClientTabs from './navigation/ClientTabs';
 import DrawerNavigation from './navigation/DrawerNavigation';
+import SignupScreen from './screens/authScreens/SignupScreen';
+import firebase from 'firebase';
+import {config} from './firebaseconfig'
+
+
 
 const Stack = createStackNavigator();
 export default function App() {
+
+  useEffect(() => {
+    if(!firebase.apps.length){
+      firebase.initializeApp(config)
+    }
+    else{
+      firebase.app()
+    }
+    
+  }, [])
+
   return (
     <NavigationContainer>
             <Stack.Navigator>
@@ -33,6 +49,17 @@ export default function App() {
 
           }}
             />
+
+          <Stack.Screen
+            name='SignupScreen'
+            component={SignupScreen}
+            options={{
+              headerShown:false,
+              ...TransitionPresets.RevealFromBottomAndroid
+
+          }}
+            />
+
             <Stack.Screen
             name='DrawerNavigation'
             component={DrawerNavigation}
