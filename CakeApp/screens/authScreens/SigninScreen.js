@@ -3,10 +3,6 @@ import { View, Text, StyleSheet, TextInput, Button, StatusBar } from 'react-nati
 import {colors,parameters} from '../../global/styles';
 import Header from '../../components/Header';
 
-
-
-
-
 export default function SigninScreen({navigation}) {
 
     const [textInputFoccused, settextInputFoccused] = useState(false);
@@ -16,12 +12,25 @@ export default function SigninScreen({navigation}) {
     const textInput1 = useRef(1)
     const textInput2 = useRef(2)
 
-    const onsubmit = () => {
+    const onsubmit = (email,password) => {
+
+        const reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
         if(!email && !password){
             alert('Please enter all the required fields')
         }
+        else if(!reg.test(email)){
+            alert('Invalid Email')
+        }
         else{
-            
+            // firebase.auth().createUserWithEmailAndPassword(email,password)
+            // .then(user=>{
+            //     setsuccessmessage('User Registered Successfully')
+            //     seterrormessage('')
+            //     alert('success')
+            //     navigation.navigate('DrawerNavigation')
+
+            // }).catch(err=>seterrormessage(err.message))
             navigation.navigate('DrawerNavigation')
         }
     }

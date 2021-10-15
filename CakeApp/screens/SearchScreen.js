@@ -1,16 +1,38 @@
-import React from 'react'
-import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, ImageBackground, Dimensions, Image, TouchableOpacity, ScrollView } from 'react-native'
+import React, {useState, useEffect} from 'react'
+import { View, Text, StyleSheet, FlatList, TouchableWithoutFeedback, ImageBackground, Dimensions, Image, TouchableOpacity, ScrollView, StatusBar } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Favourities from '../components/Favourites/Favourities';
+import { getCategories} from '../api/CategoriesApi'
+import HomeHeader from '../components/HomeHeader';
 
 import SearchComponent from '../components/SearchComponent'
 import { filterData } from '../global/Data'
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
-export default function SearchScreen({navigation}) {
+export default function SearchScreen({navigation, route}) {
+
+    const [cakeList, setcakeList] = useState([])
+
+    const onCategoryReceived = (cakeList) => {
+        setcakeList(cakeList)
+    }
+
+    useEffect(() => {
+        getCategories(onCategoryReceived)
+    }, [])
+
+
     return (
         <View>
+            <StatusBar 
+            barStyle= 'dark-content'
+            backgroundColor = '#F6F7F9'
+            />
+
+<HomeHeader
+            navigation={navigation}
+            />
             
                 <View style={{marginHorizontal:10}}>
                     <SearchComponent />
@@ -23,12 +45,12 @@ export default function SearchScreen({navigation}) {
                     <View style={{alignItems:'center',}}>
                     
                         <FlatList 
-                        data={filterData}
+                        data={cakeList}
                         keyExtractor={item=>item.id}
                         renderItem={({item})=>(
                             <TouchableOpacity
                             onPress={()=>{
-                                navigation.navigate('SearchResultScreen',{item:item.name})
+                                navigation.navigate('SearchResultScreen',{cakeD:item})
 
                             }}
                             >
@@ -37,12 +59,13 @@ export default function SearchScreen({navigation}) {
                                     <View style={styles.imageContainer} style={{alignItems:'center'}}>
                                         <Image
                                         style={{width: SCREEN_WIDTH*0.4475,height: SCREEN_WIDTH*0.4475,}}
-                                        source={item.image}
+                                        source={{uri: item.image}}
                                         />
                                     </View>
                                     <View style={styles.cardBody}>
-                                        <Text>{item.name}</Text>
-                                        <Text>Price</Text>
+                                        <Text style={{fontWeight:'bold'}}>{item.name}</Text>
+                                        <Text>LKR {item.price}.00</Text>
+                                        <Text>{item.quantity}</Text>
                                     </View>
                                 </View>
                             </TouchableOpacity>

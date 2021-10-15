@@ -12,6 +12,10 @@ import DrawerNavigation from './navigation/DrawerNavigation';
 import SignupScreen from './screens/authScreens/SignupScreen';
 import firebase from 'firebase';
 import {config} from './firebaseconfig'
+import {Provider} from 'react-redux'
+import {store} from './Redux/store'
+
+
 
 
 
@@ -29,6 +33,7 @@ export default function App() {
   }, [])
 
   return (
+    <Provider store={store}>
     <NavigationContainer>
             <Stack.Navigator>
             <Stack.Screen
@@ -71,6 +76,7 @@ export default function App() {
             />
         </Stack.Navigator>
         </NavigationContainer>
+        </Provider>
   )
 }
 
