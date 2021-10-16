@@ -18,7 +18,6 @@ const SearchResultScreen = ({navigation,route}) => {
         image: route.params.cakeD.image,
         quantity: route.params.cakeD.quantity,
         itemId: route.params.cakeD.itemId
-
     })
     
     const dispatch = useDispatch()
@@ -58,13 +57,16 @@ const SearchResultScreen = ({navigation,route}) => {
                     </View>
                     <View style={{}}>
                     
-                    <Text style={{position:'relative', fontSize:30, fontWeight:'bold', marginLeft:50, marginTop:10}}>{cakeD.name}</Text>
-                    <Text style={{position:'relative', fontSize:20, fontWeight:'bold', marginLeft:50}}>LKR {cakeD.price}.00</Text>
-                    <Text style={{position:'relative', fontSize:16,  marginLeft:50}}>{cakeD.quantity}</Text>
+                    <Text style={{position:'relative', fontSize:24, fontWeight:'bold', marginLeft:50, marginTop:10}}>{cakeD.name}</Text>
+                    <View style={{flexDirection:'row', justifyContent:'space-between',marginLeft:50,marginRight:50}}>
+                    <Text style={{position:'relative', fontSize:18, fontWeight:'bold'}}>LKR {cakeD.price}.00</Text>
+                    <Text style={{position:'relative', fontSize:16,  marginLeft:50, fontWeight:'bold'}}>{cakeD.quantity}</Text>
+                    </View>
                     </View>
 
-                    <View style={{margin:10}}>
+                    <View style={styles.btn}>
                         <Button
+                        color= '#B9AB98'
                         title='ADD TO CART'
                         onPress={addToCart} 
                         />
@@ -98,8 +100,8 @@ export default SearchResultScreen
 
 const styles = StyleSheet.create({
     tinyLogo: {
-        width: 250,
-        height: 250,
+        width: 300,
+        height: 300,
         alignItems:'center',
         justifyContent:'center',
         borderRadius:20,
@@ -112,6 +114,14 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         fontSize:20,
         fontWeight:'bold'
+    },
+    btn: {
+        
+        marginLeft:40,
+        marginRight:40,
+        marginHorizontal: 10,
+        margin:20,
+        borderRadius:10,
     },
      
 })

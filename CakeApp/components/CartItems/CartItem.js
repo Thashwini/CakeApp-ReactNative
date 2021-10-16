@@ -20,24 +20,24 @@ const CartItem = ({items}) => {
     }
 
     return (
-        <View style={{flexDirection:'row'}}>
+        <View style={{flexDirection:'row', margin:20}}>
             <View style={{flexDirection:'row'}}>
             <Image
             source={{uri: image}} 
             style={styles.tinyLogo}
             />
             </View>
-            <View>
+            <View style={{marginTop:20}}>
                 {/* <Text>LKR {price}.00</Text> */}
-                <Text style={{marginLeft:20}}>LKR {totalAmount}.00</Text>
+                <Text style={{marginLeft:20, fontSize:16}}>LKR {totalAmount}.00</Text>
             </View>
-            <View style={{flexDirection:'row', marginLeft:20}}>
-                <TouchableOpacity onPress={decrementQuantity}>
-                <AntDesign name='minus' size={24} color="black" />
+            <View style={{flexDirection:'row', marginLeft:80, marginTop:20}}>
+                <TouchableOpacity onPress={decrementQuantity} style={{width:20, height:20, backgroundColor:'black', borderRadius:50}}>
+                <AntDesign name='minus' size={20} color="white" />
                 </TouchableOpacity>
                 <Text style={{marginLeft:10, marginRight:10}}>{qty}</Text>
-                <TouchableOpacity onPress={incrementQuantity}>
-                <AntDesign name='plus' size={24} color="black" />
+                <TouchableOpacity onPress={incrementQuantity} style={{width:20, height:20, backgroundColor:'black', borderRadius:50}}>
+                <AntDesign name='plus' size={20} color="white" />
             </TouchableOpacity>
             </View>
         </View>
@@ -52,5 +52,6 @@ const styles = StyleSheet.create({
         height: 80,
         alignItems:'center',
         justifyContent:'center',
+        borderRadius:10
       },
 })

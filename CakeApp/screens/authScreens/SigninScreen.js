@@ -18,9 +18,6 @@ export default function SigninScreen({navigation}) {
         if(user !== null){
             navigation.navigate('DrawerNavigation')
         }
-        else if(user === null){
-            alert('Invalid Signin')
-        }
     }
 
     const review = yup.object({

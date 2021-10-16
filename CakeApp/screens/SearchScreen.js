@@ -30,7 +30,7 @@ export default function SearchScreen({navigation, route}) {
             backgroundColor = '#F6F7F9'
             />
 
-<HomeHeader
+            <HomeHeader
             navigation={navigation}
             />
             
@@ -51,7 +51,6 @@ export default function SearchScreen({navigation, route}) {
                             <TouchableOpacity
                             onPress={()=>{
                                 navigation.navigate('SearchResultScreen',{cakeD:item})
-
                             }}
                             >
                                 

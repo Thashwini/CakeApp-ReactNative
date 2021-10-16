@@ -14,6 +14,7 @@ import firebase from 'firebase';
 import {config} from './firebaseconfig'
 import {Provider} from 'react-redux'
 import {store} from './Redux/store'
+import AccountDetails from './screens/AccountDetails';
 
 
 
@@ -70,6 +71,16 @@ export default function App() {
             <Stack.Screen
             name='DrawerNavigation'
             component={DrawerNavigation}
+            options={{
+              headerShown:false,
+              ...TransitionPresets.RevealFromBottomAndroid
+
+          }}
+            />
+
+<Stack.Screen
+            name='AccountDetails'
+            component={AccountDetails}
             options={{
               headerShown:false,
               ...TransitionPresets.RevealFromBottomAndroid

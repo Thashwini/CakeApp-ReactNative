@@ -1,10 +1,11 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { View, Text, StyleSheet, Modal, FlatList, TouchableOpacity, Keyboard} from 'react-native'
 import { TextInput, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Feather, MaterialIcons, Ionicons } from '@expo/vector-icons';
 import { filterData } from '../global/Data'; 
 import { useNavigation } from '@react-navigation/native';
 import { filter } from 'lodash';
+import { getCategories} from '../api/CategoriesApi'
 
 export default function SearchComponent() {
 
@@ -14,6 +15,16 @@ export default function SearchComponent() {
     const navigation = useNavigation();
 
     const textIn = useRef()
+
+    const [cakeList, setcakeList] = useState([])
+
+    const onCategoryReceived = (cakeList) => {
+        setcakeList(cakeList)
+    }
+
+    useEffect(() => {
+        getCategories(onCategoryReceived)
+    }, [])
 
     const contains = ({name},query)=>{
         if(name.includes(query)){
@@ -31,7 +42,7 @@ export default function SearchComponent() {
 
     return (
         <View style={{width:'100%', paddingTop:20}}>
-            <TouchableWithoutFeedback
+            {/* <TouchableWithoutFeedback
             onPress={()=>{
                 setmodalVisible(true)
             }}
@@ -43,7 +54,7 @@ export default function SearchComponent() {
                 
                     <Text style={{fontSize:14}}>What are you looking for?</Text>
                 </View>
-            </TouchableWithoutFeedback>
+            </TouchableWithoutFeedback> */}
 
             <Modal
             animationType='fade'
@@ -97,13 +108,13 @@ export default function SearchComponent() {
                     </View>
 
                     <FlatList 
-                data = {data}
+                data = {cakeList}
                 renderItem={({item})=>(
                     
                     <TouchableOpacity
                     onPress={()=>{
                         Keyboard.dismiss
-                        navigation.navigate('SearchResultScreen',{item:item.name})
+                        navigation.navigate('SearchResultScreen',{cakeD:item})
                         setmodalVisible(false)
                         
                     }}

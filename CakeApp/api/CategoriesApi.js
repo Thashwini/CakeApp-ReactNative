@@ -30,6 +30,7 @@ export function signout(onSignOut){
 }
 
 export async function getCategories(categoryRetreived){
+
     var cakeList = []
     var snapshot = await firebase.firestore()
     .collection('Categories')
@@ -42,4 +43,43 @@ export async function getCategories(categoryRetreived){
     })
 
     categoryRetreived(cakeList)
+}
+
+export async function getOrders(orderRetreived){
+    const uId = firebase.auth().currentUser.uid
+    var orderList = []
+    console.log(uId)
+    var snapshot = await firebase.firestore()
+    .collection('Orders')
+    .where('customerId', '==' , uId)
+    .get()
+    snapshot.forEach((doc)=>{
+        const order = doc.data();
+        order.id = doc.id
+
+        orderList.push(order)
+    })
+
+    orderRetreived(orderList)
+}
+
+export function addOrders(order){
+    
+    firebase.firestore()
+    .collection('Orders')
+    .add({
+        customerId: firebase.auth().currentUser.uid,
+        customerName: firebase.auth().currentUser.displayName,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        Items: order,
+        orderId: 'order' + Math.round(  (Math.random() * Math.pow(10, 6)) + '' + new Date().getTime())
+
+    })
+    .then((snapshot) => {
+        // snapshot.get()
+        order.id=snapshot.id
+        snapshot.set(order)
+    })
+    .then(()=>alert('SUCCESS PAYMENT'))
+    .catch((error)=>console.log(error))
 }

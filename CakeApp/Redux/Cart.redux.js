@@ -46,8 +46,10 @@ export const CartSlice = createSlice({
                 state.totalPrice = state.totalPrice += itemprice
                 exists.totalAmount = newItem.price * exists.qty
             }
+        },
 
-            
+        clear(state, action){
+            state=initialState
 
         },
 
