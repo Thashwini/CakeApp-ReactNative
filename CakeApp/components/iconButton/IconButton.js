@@ -6,7 +6,7 @@ const IconButton = (onPress, backgroundColor='#000', iconName) => {
     return (
         <View>
             <TouchableOpacity onPress={onPress}>
-                <AntDesign name={iconName} size={24} color="black" />
+                <AntDesign name='plus' size={24} color="black" />
             </TouchableOpacity>
         </View>
     )

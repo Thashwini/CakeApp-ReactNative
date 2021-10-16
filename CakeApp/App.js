@@ -23,14 +23,16 @@ const Stack = createStackNavigator();
 export default function App() {
 
   useEffect(() => {
-    if(!firebase.apps.length){
-      firebase.initializeApp(config)
-    }
-    else{
-      firebase.app()
-    }
+    
     
   }, [])
+
+  if(!firebase.apps.length){
+    firebase.initializeApp(config)
+  }
+  else{
+    firebase.app()
+  }
 
   return (
     <Provider store={store}>

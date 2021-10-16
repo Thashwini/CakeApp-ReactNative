@@ -1,12 +1,13 @@
 import React from 'react'
-import { StyleSheet, Text, View, Image } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native'
 import IconButton from '../iconButton/IconButton'
 import {useDispatch} from 'react-redux'
 import { cartActions } from '../../Redux/Cart.redux'
+import { AntDesign } from '@expo/vector-icons'; 
 
 
 const CartItem = ({items}) => {
-    const {image, title, price, qty, totalAmount} = items
+    const {image, title, price, qty, totalAmount, totalPrice} = items
 
     const dispatch = useDispatch()
 
@@ -15,31 +16,29 @@ const CartItem = ({items}) => {
     }
 
     const decrementQuantity = () => {
-        dispatch(cartActions.removeItem(Items))
+        dispatch(cartActions.removeItem(items))
     }
 
     return (
-        <View>
-            <View>
+        <View style={{flexDirection:'row'}}>
+            <View style={{flexDirection:'row'}}>
             <Image
             source={{uri: image}} 
+            style={styles.tinyLogo}
             />
             </View>
             <View>
-                <Text>{title}</Text>
-                <Text>LKR {price}.00</Text>
-                <Text>{totalAmount}</Text>
+                {/* <Text>LKR {price}.00</Text> */}
+                <Text style={{marginLeft:20}}>LKR {totalAmount}.00</Text>
             </View>
-            <View>
-                <IconButton 
-                iconName='minus'
-                onPress={decrementQuantity}
-                />
-                <Text>{qty}</Text>
-                <IconButton 
-                iconName='plus'
-                onPress={incrementQuantity}
-                />
+            <View style={{flexDirection:'row', marginLeft:20}}>
+                <TouchableOpacity onPress={decrementQuantity}>
+                <AntDesign name='minus' size={24} color="black" />
+                </TouchableOpacity>
+                <Text style={{marginLeft:10, marginRight:10}}>{qty}</Text>
+                <TouchableOpacity onPress={incrementQuantity}>
+                <AntDesign name='plus' size={24} color="black" />
+            </TouchableOpacity>
             </View>
         </View>
     )
@@ -47,4 +46,11 @@ const CartItem = ({items}) => {
 
 export default CartItem
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    tinyLogo: {
+        width: 80,
+        height: 80,
+        alignItems:'center',
+        justifyContent:'center',
+      },
+})

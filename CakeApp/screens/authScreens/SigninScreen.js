@@ -1,39 +1,35 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { View, Text, StyleSheet, TextInput, Button, StatusBar } from 'react-native'
 import {colors,parameters} from '../../global/styles';
 import Header from '../../components/Header';
+import { Formik, ErrorMessage } from 'formik';
+import * as yup from 'yup'
+import { login, subscribeToAuthChanges} from '../../api/CategoriesApi'
+
 
 export default function SigninScreen({navigation}) {
 
-    const [textInputFoccused, settextInputFoccused] = useState(false);
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('')
+    useEffect(() => {
+        
+        
+    }, [])
 
-    const textInput1 = useRef(1)
-    const textInput2 = useRef(2)
-
-    const onsubmit = (email,password) => {
-
-        const reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-        if(!email && !password){
-            alert('Please enter all the required fields')
-        }
-        else if(!reg.test(email)){
-            alert('Invalid Email')
-        }
-        else{
-            // firebase.auth().createUserWithEmailAndPassword(email,password)
-            // .then(user=>{
-            //     setsuccessmessage('User Registered Successfully')
-            //     seterrormessage('')
-            //     alert('success')
-            //     navigation.navigate('DrawerNavigation')
-
-            // }).catch(err=>seterrormessage(err.message))
+    const onAuthStateChanged = (user) =>{
+        if(user !== null){
             navigation.navigate('DrawerNavigation')
         }
+        else if(user === null){
+            alert('Invalid Signin')
+        }
     }
+
+    const review = yup.object({
+        email: yup.string().required("Email is Required").email("Email is not valid"),
+        password: yup.string().required('Password is required').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"),
+        
+    
+    })
 
     return (
         
@@ -55,45 +51,51 @@ export default function SigninScreen({navigation}) {
                 </View>
 
                 <View>
-                    <View>
+                <Formik
+                    initialValues={{email:'',password:''}}
+                    validationSchema={review}
+                    onSubmit={(values, actions)=>{
+                        actions.resetForm()
+                        console.log(values)
+                        login(values)
+                        subscribeToAuthChanges(onAuthStateChanged)
+                    }}
+                    >
+                        {(props)=>(
+                        <View>
+
                         <TextInput
                         style={styles.TextInput1}
-                        placeholder= 'Email'
-                        ref={textInput1}
-                        onFocus={()=>{
-                            settextInputFoccused(false)
-                        }}
-                        onBlur={()=>{
-                            settextInputFoccused(true)
-                        }}
-                        onChangeText={(text)=>setemail(text)}
-
+                        onChangeText={props.handleChange('email')}
+                        placeholder="Enter Email Address"
+                        value={props.values.email}
+                        onBlur={props.handleBlur('email')}
                         />
-                    </View> 
-                    <View>
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='email' /></Text>
+
                         <TextInput
                         style={styles.TextInput1}
-                        placeholder= 'Password'
-                        ref={textInput2}
-                        onChangeText={(text)=>setpassword(text)}
-
+                        secureTextEntry={true}
+                        onChangeText={props.handleChange('password')}
+                        placeholder="Enter Password"
+                        value={props.values.password}
+                        onBlur={props.handleBlur('password')}
                         />
-                    </View>
-                    <View style={styles.btn}>
-                        <Button 
-                        title='SIGN IN'
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='password' /></Text>
+
+                        
+                        <View style={styles.btn}>
+                        <Button
                         color= '#B9AB98'
-                        marginLeft='40'
-                        marginRight='40'
                         style={styles.btn}
-                        onPress={()=>{
-                            // navigation.navigate('DrawerNavigation')
-                            
-                            onsubmit(email,password)
-                        }}
+                        onPress={()=>props.handleSubmit()} 
+                        title='SIGN IN'
                         />
+                        </View>
+                        </View>
+                        )}
 
-                    </View>
+                    </Formik>
                 </View>
 
                 <View>

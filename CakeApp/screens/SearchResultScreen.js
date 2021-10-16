@@ -16,7 +16,8 @@ const SearchResultScreen = ({navigation,route}) => {
         name: route.params.cakeD.name,
         price: route.params.cakeD.price,
         image: route.params.cakeD.image,
-        quantity: route.params.cakeD.quantity
+        quantity: route.params.cakeD.quantity,
+        itemId: route.params.cakeD.itemId
 
     })
     

@@ -1,48 +1,31 @@
-import React, {useState, useRef} from 'react'
+import React, {useState, useRef, useEffect} from 'react'
 import { StyleSheet, Text, View, TextInput, Button, StatusBar } from 'react-native'
 import Header from '../../components/Header';
 import firebase from 'firebase';
-
-
+import { Formik, ErrorMessage } from 'formik';
+import { signup, subscribeToAuthChanges} from '../../api/CategoriesApi'
+import * as yup from 'yup'
 
 const SignupScreen = ({navigation}) => {
 
-    const [textInputFoccused, settextInputFoccused] = useState(false);
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('')
-    const [repassword, setrepassword] = useState('')
-    const [errormessage, seterrormessage] = useState('')
-    const [successmessage, setsuccessmessage] = useState('')
+    // useEffect(() => {
+        
+        
+    // }, [])
 
-    const textInput1 = useRef(1)
-    const textInput2 = useRef(2)
-    const textInput3 = useRef(3)
-
-    const onsubmit = (email,password) => {
-
-        const reg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
-        if(!email && !password){
-            alert('Please enter all the required fields')
-        }
-        else if(!reg.test(email)){
-            alert('Invalid Email')
-        }
-        else if(password!=repassword){
-            alert('Passwords matching faild')
-        }
-        else{
-            firebase.auth().createUserWithEmailAndPassword(email,password)
-            .then(user=>{
-                setsuccessmessage('User Registered Successfully')
-                seterrormessage('')
-                alert('success')
-                navigation.navigate('DrawerNavigation')
-
-            }).catch(err=>seterrormessage(err.message))
-            // navigation.navigate('DrawerNavigation')
+    const onAuthStateChanged = (user) =>{
+        if(user !== null){
+            navigation.navigate('DrawerNavigation')
         }
     }
+
+    const review = yup.object({
+        displayName: yup.string().required("Name is required"),
+        email: yup.string().required("Email is Required").email("Email is not valid"),
+        password: yup.string().required('Password is required').matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&\*])(?=.{8,})/,
+            "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and One Special Case Character"),
+        confirmpassword: yup.string().required('Confirm Password is required').test('passwords-match', 'Passwords must match', function (value) { return this.parent.password === value })  
+    })
 
     return (
         <View style={styles.container}>
@@ -63,58 +46,68 @@ const SignupScreen = ({navigation}) => {
                 </View>
 
                 <View>
-                    <View>
-                        <TextInput
+                    <Formik
+                    initialValues={{email:'',password:'',displayName:'',confirmpassword:''}}
+                    validationSchema={review}
+                    onSubmit={(values, actions)=>{
+                        actions.resetForm()
+                        console.log(values)
+                        signup(values)
+                        subscribeToAuthChanges(onAuthStateChanged)
+                    }}
+                    >
+                        {(props)=>(
+                        <View>
+                        <TextInput 
                         style={styles.TextInput1}
-                        placeholder= 'Email'
-                        ref={textInput1}
-                        onFocus={()=>{
-                            settextInputFoccused(false)
-                        }}
-                        onBlur={()=>{
-                            settextInputFoccused(true)
-                        }}
-                        onChangeText={(text)=>setemail(text)}
-
+                        onChangeText={props.handleChange('displayName')}
+                        placeholder="Enter Name"
+                        value={props.values.displayName}
+                        onBlur={props.handleBlur('displayName')}
                         />
-                    </View> 
-                    <View>
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='displayName' /></Text>
+
                         <TextInput
                         style={styles.TextInput1}
-                        placeholder= 'Enter Password'
+                        onChangeText={props.handleChange('email')}
+                        placeholder="Enter Email Address"
+                        value={props.values.email}
+                        onBlur={props.handleBlur('email')}
+                        />
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='email' /></Text>
+
+                        <TextInput
+                        style={styles.TextInput1}
                         secureTextEntry={true}
-                        ref={textInput2}
-                        onChangeText={(text)=>setpassword(text)}
-
+                        onChangeText={props.handleChange('password')}
+                        placeholder="Enter Password"
+                        value={props.values.password}
+                        onBlur={props.handleBlur('password')}
                         />
-                    </View>
-                    <View>
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='password' /></Text>
+
                         <TextInput
                         style={styles.TextInput1}
-                        placeholder= 'Re-enter Password'
                         secureTextEntry={true}
-                        ref={textInput3}
-                        
-
+                        onChangeText={props.handleChange('confirmpassword')}
+                        placeholder="Re-Enter Password "
+                        value={props.values.confirmpassword}
+                        onBlur={props.handleBlur('confirmpassword')}
                         />
-                    </View>
-                    <View style={styles.btn}>
-                        <Button 
-                        title='SIGN UP'
+                        <Text style={{color:'red', textAlign:'center'}}><ErrorMessage name='confirmpassword' /></Text>
+                        <View style={styles.btn}>
+
+                        <Button
                         color= '#B9AB98'
-                        marginLeft='40'
-                        marginRight='40'
-                        style={styles.btn}
-                        onPress={()=>{
-                            onsubmit(email,password,repassword)
-                        }}
+                        onPress={()=>props.handleSubmit()} 
+                        title='SIGN UP'
                         />
-
-                    </View>
+                        </View>
+                        </View>
+                        )}
+                    </Formik>
                 </View>
-                {!!errormessage && <Text>{errormessage}</Text>}
-                {!!successmessage && <Text>{successmessage}</Text>}
-
+                
                 <View style={{flexDirection:'row',justifyContent:'center'}}>
                     <Text style={styles.text3}>Already Registered? </Text>
                     <Text style={styles.text4}
@@ -123,10 +116,7 @@ const SignupScreen = ({navigation}) => {
                     }}
                     >SIGN IN</Text>
                 </View>
-
-            </View>
-            
-            
+            </View>           
         </View>
     )
 }
@@ -175,7 +165,7 @@ const styles = StyleSheet.create({
         borderColor:'black',
         marginHorizontal: 10,
         borderRadius:10,
-        margin:20,
+        margin:2,
         marginLeft:40,
         marginRight:40,
         height:40,

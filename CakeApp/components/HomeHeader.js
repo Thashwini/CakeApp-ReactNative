@@ -3,11 +3,20 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import {colors,parameters} from '../global/styles';
 import { Entypo } from '@expo/vector-icons'; 
 import logo from '../Images/logo.jpg';
-import { Feather } from '@expo/vector-icons'; 
+import { Feather, Octicons } from '@expo/vector-icons'; 
 import { withBadge, Badge } from 'react-native-elements';
+import { signout } from '../api/CategoriesApi';
 
 export default function HomeHeader({title,type,navigation}) {
     const BadgeIcon = withBadge(0)(Feather);
+
+    const onSignOut = () => {
+        console.log('signed outttt')
+        navigation.navigate('WelcomeScreen')
+
+    }
+
+
     return (
         <View style={styles.header}>
             
@@ -28,6 +37,7 @@ export default function HomeHeader({title,type,navigation}) {
             source={logo}
             />
             </View>
+            <View style={{flexDirection:'row'}}>
             <View style={{marginRight:10, padding:2}}>
                 <Feather 
                 name="shopping-bag" size={24} color="black" />
@@ -37,6 +47,13 @@ export default function HomeHeader({title,type,navigation}) {
               value={1}
               containerStyle={{ position: 'absolute', top: 0, left: 12 }}
             />
+                </View>
+                <View >
+                <Octicons name="sign-out" size={24} color="black" 
+                    onPress={()=>signout(onSignOut)}
+                    />
+
+                </View>
                 </View>
         </View>
     )

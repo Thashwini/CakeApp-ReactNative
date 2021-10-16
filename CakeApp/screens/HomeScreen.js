@@ -33,10 +33,10 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center', marginTop:80}}>OUR PRODUCTS</Text>
+                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center', marginTop:40}}>OUR PRODUCTS</Text>
             </View>
 
-            <View style={{marginBottom:80}}>
+            <View style={{marginBottom:40}}>
                 <FlatList 
                 data = {filterData}
                 horizontal = {true}
@@ -44,11 +44,11 @@ export default function HomeScreen({navigation}) {
                 keyExtractor = {(item)=>item.id}
                 extraData = {indexCheck}
                 renderItem={({item,index})=>(
-                    <Pressable
-                    onPress={()=>{setindexCheck(item.id)}}
+                    <View
+                    
                     >
                         <View style={styles.Card}>
-                            <View style={indexCheck === item.id ? {...styles.smallCard} : {...styles.smallCardSelected}}>
+                            <View style={styles.smallCard}>
                                 <Image
                                 style={{height:75, width:75, borderRadius:10}}
                                 source={item.image}
@@ -58,50 +58,11 @@ export default function HomeScreen({navigation}) {
                                 <Text style={{fontSize:10, fontWeight:'bold'}}>{item.name}</Text>
                             </View>
                         </View>
-                    </Pressable>
+                    </View>
                 )}
                 />
 
             </View>
-            <View style={{flexDirection:'row', backgroundColor:'#fafafa', marginTop:20,}}>
-                <View style={{ margin:20, alignItems:'center', justifyContent:'center',width:150, }}
-                
-                >
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>WE MAKE</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>YOUR</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>BIRTH DAY</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>MORE TASTY</Text>
-                </View>
-                <View >
-                    <Image
-                    style={styles.tinyLogo2}
-                    source={card1}
-                    />
-                </View>
-            </View>
-            <View style={{flexDirection:'row', backgroundColor:'#fafafa'}}>
-                
-                <View>
-                    <Image
-                    style={styles.tinyLogo3}
-                    source={card2}
-                    />
-                </View>
-                <View style={{ alignItems:'center', justifyContent:'center',width:250, paddingRight:40}}
-                
-                >
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>WE MAKE</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>YOUR</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>SPECIAL DAY</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>EVEN MORE</Text>
-                    <Text style={{fontSize:16, fontWeight:'bold'}}>SPECIAL</Text>
-                </View>
-            </View>
-            <View style={{ alignItems:'center', justifyContent:'center',marginTop:40,padding:40}}
-                
-                >
-                    <Text>FOOTER</Text>
-                </View>
         </ScrollView>
         </View>
     )

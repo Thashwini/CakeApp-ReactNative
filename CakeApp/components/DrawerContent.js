@@ -2,9 +2,18 @@ import React from 'react'
 import { View, Text, Linking, Pressable, Alert, Switch, Button, StyleSheet } from 'react-native';
 import { DrawerContentScrollView, DrawerItemList, DrawerItem } from '@react-navigation/drawer';
 import { FontAwesome, Octicons, MaterialIcons } from '@expo/vector-icons'; 
+import { signout } from '../api/CategoriesApi';
 
 
-export default function DrawerContent(props) {
+export default function DrawerContent(props,{navigation}) {
+
+    const onSignOut = () => {
+        console.log('signed outttt')
+        navigation.navigate('WelcomeScreen')
+
+    }
+
+
     return (
         <View style={{flex:1}}>
             <DrawerContentScrollView {...props}>
@@ -42,8 +51,11 @@ export default function DrawerContent(props) {
 
             <DrawerItem
                 label='SIGN OUT'
+                onPress={()=>signout(onSignOut)}
                 icon= {({color,size})=>(
-                    <Octicons name="sign-out" size={24} color="black" />
+                    <Octicons name="sign-out" size={24} color="black" 
+                    
+                    />
 
                 )}
                 />

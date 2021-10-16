@@ -12,7 +12,17 @@ export default function Cart() {
     console.log(cart)
 
     //cart total price
-    const totalPrice = useSelector(state=>state.cart.totalprice)
+    const totalPrice = useSelector(state=>state.cart.totalPrice)
+
+    var totaprice = 0;
+
+    for(let i=0;i<cart.length;i++){
+        
+        console.log(cart[i].totalAmount)
+        totaprice = parseInt(totaprice) + parseInt(cart[i].totalAmount)
+        console.log('totaprice')
+        console.log(totaprice)
+    }
 
     //create a new component for the cart item list
 
@@ -23,12 +33,12 @@ export default function Cart() {
             data={cart}
             keyExtractor={(item)=>item.id}
             renderItem={({item,index})=>{
-                
+                console.log('cccccccccccccccccccccccccc')
                 console.log(item)
                 
                 return(
                     
-                    <CartItem items={item}/>
+                    <CartItem key={item} items={item}/>
                     
                     
 
@@ -41,7 +51,7 @@ export default function Cart() {
         
             />
             <View>
-                <Text>Total Amount :{Math.floor(totalPrice)}</Text>
+                <Text>Total Amount :{totaprice}</Text>
             </View>
             <View>
                 <Button 
