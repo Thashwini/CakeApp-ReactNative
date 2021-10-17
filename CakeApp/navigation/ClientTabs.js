@@ -1,6 +1,6 @@
 import React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Feather, MaterialIcons } from '@expo/vector-icons'; 
+import { Feather, MaterialIcons, MaterialCommunityIcons  } from '@expo/vector-icons'; 
 import HomeScreen from '../screens/HomeScreen';
 import Cart from '../screens/Cart';
 import MyAccount from '../screens/MyAccount';
@@ -52,9 +52,9 @@ export default function RootClientTabs() {
             name='ClientStack'
             component={ClientStack}
             options={{
-                tabBarLabel:"Search",
+                tabBarLabel:"Shop",
                 tabBarIcon:({color,size})=>{
-                    return <Feather name="search" size={24} color={color} />
+                    return <MaterialCommunityIcons name="cupcake" size={24} color={color} />
                     
                 }
             }}
@@ -64,9 +64,9 @@ export default function RootClientTabs() {
             name='MyAccount'
             component={MyAccount}
             options={{
-                tabBarLabel:"My Account",
+                tabBarLabel:"My Orders",
                 tabBarIcon:({color,size})=>{
-                    return <Feather name="user" size={size} color={color} />
+                    return <MaterialIcons name="list-alt" size={24} color={color} />
                 }
             }}
              />

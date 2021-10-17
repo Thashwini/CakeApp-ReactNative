@@ -8,10 +8,10 @@ import * as yup from 'yup'
 
 const SignupScreen = ({navigation}) => {
 
-    // useEffect(() => {
+    useEffect(() => {
+        subscribeToAuthChanges(onAuthStateChanged)
         
-        
-    // }, [])
+    }, [])
 
     const onAuthStateChanged = (user) =>{
         if(user !== null){
@@ -53,7 +53,7 @@ const SignupScreen = ({navigation}) => {
                         actions.resetForm()
                         console.log(values)
                         signup(values)
-                        subscribeToAuthChanges(onAuthStateChanged)
+                        
                     }}
                     >
                         {(props)=>(

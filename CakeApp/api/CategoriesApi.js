@@ -63,8 +63,9 @@ export async function getOrders(orderRetreived){
     orderRetreived(orderList)
 }
 
-export function addOrders(order){
-    
+export function addOrders(order, addOrdersComplete){
+    console.log('oooerrrderrrr')
+    console.log(order)
     firebase.firestore()
     .collection('Orders')
     .add({
@@ -72,6 +73,7 @@ export function addOrders(order){
         customerName: firebase.auth().currentUser.displayName,
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         Items: order,
+        dddd:order,
         orderId: 'order' + Math.round(  (Math.random() * Math.pow(10, 6)) + '' + new Date().getTime())
 
     })
@@ -80,6 +82,6 @@ export function addOrders(order){
         order.id=snapshot.id
         snapshot.set(order)
     })
-    .then(()=>alert('SUCCESS PAYMENT'))
+    .then(()=>addOrdersComplete(order))
     .catch((error)=>console.log(error))
 }

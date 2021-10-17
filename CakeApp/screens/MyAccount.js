@@ -1,9 +1,13 @@
 import React, {useState, useEffect} from 'react'
-import { View, Text, StyleSheet,StatusBar, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet,StatusBar, FlatList, TouchableOpacity, SafeAreaView } from 'react-native'
 import HomeHeader from '../components/HomeHeader';
 import { getOrders} from '../api/CategoriesApi'
+import { ListItem, Divider } from 'react-native-elements'
+import {useSelector} from 'react-redux'
 
 export default function MyAccount({navigation}) {
+
+
 
     const [orderList, setorderList] = useState([])
 
@@ -14,6 +18,8 @@ export default function MyAccount({navigation}) {
     useEffect(() => {
         getOrders(onOrderReceived)
     }, [])
+
+    const totalPrice = useSelector(state => state.cart.totalPrice)
 
 
     return (
@@ -30,10 +36,12 @@ export default function MyAccount({navigation}) {
                         <Text style={styles.textHeader}>MY ORDERS</Text>
                     </View>
 
-                    <View style={{alignItems:'center',}}>
+                    <View style={{margin:10}}>
+                        <SafeAreaView>
                     
                         <FlatList 
                         data={orderList}
+                        ItemSeparatorComponent={()=><Divider></Divider>}
                         keyExtractor={item=>item.id}
                         
                         renderItem={({item})=>{
@@ -47,8 +55,8 @@ export default function MyAccount({navigation}) {
                             }}
                             >
                                 
-                                <View style={{alignItems:'center',margin:5}}>
-                                        <Text style={{fontWeight:'bold', fontSize:20}}>{item.orderId}</Text>
+                                <View style={{marginLeft:20, margin:10}}>
+                                        <Text style={{fontSize:20}}>{item.orderId}</Text>
                                                           
                                 </View>
                             </TouchableOpacity>
@@ -56,10 +64,10 @@ export default function MyAccount({navigation}) {
                         }}
                         horizontal={false}
                         showsVerticalScrollIndicator={false}
-                        numColumns={2}
+                        // numColumns={2}
                         // ListHeaderComponent={<Text style={styles.textHeader}>OUR PRODUCTS</Text>}
                         />
-                        
+                        </SafeAreaView>
                     </View>
 
         </View>

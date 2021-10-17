@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
-import { View, Text, StatusBar, StyleSheet, Image } from 'react-native'
+import { View, Text, StatusBar, StyleSheet, Image, FlatList } from 'react-native'
 import HomeHeader from '../components/HomeHeader';
+import {useSelector} from 'react-redux'
 
 const AccountDetails = ({navigation,route}) => {
 
@@ -11,9 +12,12 @@ const AccountDetails = ({navigation,route}) => {
         price: route.params.orderD.Items[0].price,
         image: route.params.orderD.Items[0].image,
         quantity: route.params.orderD.Items[0].quantity,
-        itemId: route.params.orderD.Items[0].itemId
+        
     })
-    console.log(orderD)
+
+    const totalPrice = useSelector(state => state.cart.totalPrice)
+
+    
 
 
     return (
@@ -32,24 +36,36 @@ const AccountDetails = ({navigation,route}) => {
             </View>
 
             <View>
+            <FlatList 
+                        data={route.params.orderD.Items}
+                        keyExtractor={item=>item.id}
+                        renderItem={({item})=>(
+
                 <View style={{ padding:5, margin:5, borderRadius:5, }}>
                     <View style={{alignItems:'center'}}>
                     <Image
                     style={styles.tinyLogo}
-                    source={{uri:orderD.image}}
+                    source={{uri:item.image}}
                     />
                     </View>
                     <View style={{}}>
                     
-                    <Text style={{position:'relative', fontSize:24, fontWeight:'bold', marginLeft:50, marginTop:10}}>{orderD.customerName}</Text>
-                    <View style={{flexDirection:'row', justifyContent:'space-between',marginLeft:50,marginRight:50}}>
-                    <Text style={{position:'relative', fontSize:18, fontWeight:'bold'}}>LKR {orderD.price}.00</Text>
-                    <Text style={{position:'relative', fontSize:16,  marginLeft:50, fontWeight:'bold'}}>{orderD.quantity}</Text>
+                    
+                    <View style={{alignItems:'center', justifyContent:'space-between',marginLeft:50,marginRight:50}}>
+                    <Text style={{position:'relative', fontSize:18, }}>Total price: LKR {item.totalAmount}.00</Text>
+                    <Text style={{position:'relative', fontSize:18, }}>No of Items : {item.qty}</Text>
+                    <Text style={{position:'relative', fontSize:16, }}>Item quantity: {item.quantity}</Text>
+                    
                     </View>
                     </View>
+                    
 
                    
                 </View>
+                        )} />
+
+
+
             </View>
             <Text></Text>
         </View>

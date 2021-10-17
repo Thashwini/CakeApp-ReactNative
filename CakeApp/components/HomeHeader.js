@@ -36,7 +36,7 @@ export default function HomeHeader({title,type,navigation,route}) {
     const onSignOut = () => {
         console.log('signed outttt')
         
-        dispatch(cartActions.clear())
+        // dispatch(cartActions.clearItem())
         // dispatch(cartActions.addtoCart([]))
         navigation.navigate('WelcomeScreen')
     }
@@ -59,9 +59,11 @@ export default function HomeHeader({title,type,navigation,route}) {
                 />
             </View>
             <View style={{flexDirection:'row'}}>
-                <View style={{marginRight:10, padding:2}}>
+                <View style={{marginRight:10, padding:2}}
+                
+                >
                     <Feather 
-                    name="shopping-bag" size={24} color="black" />
+                    name="shopping-bag" size={24} color="black" onPress={()=>navigation.navigate('Cart')}  />
                     <Badge
                     status="primary"
                     color="black"
@@ -71,7 +73,10 @@ export default function HomeHeader({title,type,navigation,route}) {
                 </View>
                 <View style={{marginRight:10, padding:2, marginTop:3}}>
                     <Octicons name="sign-out" size={24} color="black" 
-                    onPress={()=>signout(onSignOut)}
+                    onPress={()=>{
+                        signout(onSignOut)
+                        dispatch(cartActions.clearItem())
+                    }}
                     />
                 </View>
             </View>

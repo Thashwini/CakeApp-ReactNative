@@ -21,7 +21,7 @@ export const CartSlice = createSlice({
             // updatedCart = [...state.items];
 
             //check if product exists already in cart
-            const exists = state.items.find(p=>p.itemId===newItem.itemId)
+            const exists = state.items.find(p=>p.id===newItem.id)
             //increment cart quantity
             state.totalQuantity++
             //if not exists add/ push
@@ -48,8 +48,10 @@ export const CartSlice = createSlice({
             }
         },
 
-        clear(state, action){
-            state=initialState
+        clearItem(state){
+            console.log('tttttwwwttattatatattat')
+            state.items = []
+            state.totalAmount = 0
 
         },
 
@@ -59,11 +61,11 @@ export const CartSlice = createSlice({
             console.log(itemToRemove)
 
             //check here too if the item exists in cart
-            const itemExists = state.items.find(p=> p.itemId === itemToRemove.itemId)
+            const itemExists = state.items.find(p=> p.id === itemToRemove.id)
 
             //remove item if the quantity is 1
             if(itemExists.qty===1){
-                state.items = state.items.filter(item=>item.itemId != itemToRemove.itemId)
+                state.items = state.items.filter(item=>item.id != itemToRemove.id)
                 state.totalPrice = state.totalPrice - itemToRemove.price
             }
             //else decrement the qty

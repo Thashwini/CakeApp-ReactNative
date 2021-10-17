@@ -10,7 +10,7 @@ import { login, subscribeToAuthChanges} from '../../api/CategoriesApi'
 export default function SigninScreen({navigation}) {
 
     useEffect(() => {
-        
+        subscribeToAuthChanges(onAuthStateChanged)
         
     }, [])
 
@@ -55,7 +55,7 @@ export default function SigninScreen({navigation}) {
                         actions.resetForm()
                         console.log(values)
                         login(values)
-                        subscribeToAuthChanges(onAuthStateChanged)
+                        
                     }}
                     >
                         {(props)=>(
@@ -95,9 +95,6 @@ export default function SigninScreen({navigation}) {
                     </Formik>
                 </View>
 
-                <View>
-                    <Text style={styles.text2}>Forgot Password?</Text>
-                </View>
 
                 <View style={{flexDirection:'row',justifyContent:'center'}}>
                     <Text style={styles.text3}>Haven't Register Yet? </Text>
@@ -157,7 +154,7 @@ const styles = StyleSheet.create({
         borderColor:'black',
         marginHorizontal: 10,
         borderRadius:10,
-        margin:20,
+        margin:10,
         marginLeft:40,
         marginRight:40,
         height:40,

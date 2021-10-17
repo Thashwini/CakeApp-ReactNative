@@ -1,10 +1,12 @@
 import React from 'react'
-import { View, Text, StatusBar, ScrollView, Button, StyleSheet } from 'react-native'
+import { View, Text, StatusBar, ScrollView, Button, StyleSheet, SafeAreaView } from 'react-native'
 import { FlatList } from 'react-native-gesture-handler'
 import {useSelector} from 'react-redux'
 import CartItem from '../components/CartItems/CartItem'
 import HomeHeader from '../components/HomeHeader'
 import { addOrders } from '../api/CategoriesApi'
+import { cartActions } from '../Redux/Cart.redux'
+import {useDispatch} from 'react-redux'
 
 export default function Cart({navigation}) {
 
@@ -15,6 +17,8 @@ export default function Cart({navigation}) {
 
     //cart total price
     const totalPrice = useSelector(state=>state.cart.totalPrice)
+
+    const dispatch = useDispatch()
 
     var totaprice = 0;
 
@@ -36,6 +40,11 @@ export default function Cart({navigation}) {
         console.log(totaCount)
     }
 
+    const onCheckout = () => {
+        
+        
+    }
+
     //create a new component for the cart item list
 
     return (
@@ -51,7 +60,7 @@ export default function Cart({navigation}) {
             <View>
                 <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center', marginTop:40}}>CART</Text>
             </View>
-            
+            <SafeAreaView style={{flex:1}}>
             <FlatList
             data={cart}
             keyExtractor={(item)=>item.id}
@@ -64,6 +73,7 @@ export default function Cart({navigation}) {
                 )
             }}
             />
+            </SafeAreaView>
             {totaCount === 0 ? 
                 <View>
                 <View style={{margin:20}}>
@@ -75,7 +85,7 @@ export default function Cart({navigation}) {
                 <View>
                 <View style={{margin:20}}>
                     
-                    <Text style={styles.text1}>Total Amount :{totaprice}</Text>
+                    <Text style={styles.text1}>Total Amount : LKR {totaprice}.00</Text>
                     
                 </View>
                 <View style={styles.btn}>
@@ -84,8 +94,22 @@ export default function Cart({navigation}) {
                     title='CHECKOUT'
                     onPress={()=>
                         {
-                            addOrders(cart2)
-                            
+                            addOrders(cart2, onCheckout)
+                            dispatch(cartActions.clearItem())
+                            navigation.navigate('HomeScreen')
+                            alert('SUCCESSFULL PAYMENT')
+                        }
+                    }
+                    />
+                </View>
+                <View style={styles.btn}>
+                    
+                    <Button
+                    color= '#B9AB98' 
+                    title='BACK TO SHOP'
+                    onPress={()=>
+                        {
+                            navigation.navigate('SearchScreen')
                         }
                     }
                     />
@@ -147,8 +171,8 @@ const styles = StyleSheet.create({
 
     btn: {
         
-        marginLeft:40,
-        marginRight:40,
+        marginLeft:100,
+        marginRight:100,
         marginHorizontal: 10,
         margin:20,
         borderRadius:10,

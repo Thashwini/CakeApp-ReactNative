@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, Text, StyleSheet, Image, ImageBackground, StatusBar, FlatList, Pressable, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, ImageBackground, StatusBar, FlatList, Pressable, ScrollView, SafeAreaView } from 'react-native'
 import HomeHeader from '../components/HomeHeader';
 import wallpaper from '../Images/wallpaper.jpg';
 import { filterData } from '../global/Data';
@@ -12,7 +12,7 @@ export default function HomeScreen({navigation}) {
     const [indexCheck, setindexCheck] = useState('0')
     return (
         <View>
-            <ScrollView>
+            <SafeAreaView >
             <StatusBar 
             barStyle= 'dark-content'
             backgroundColor = '#F6F7F9'
@@ -25,7 +25,7 @@ export default function HomeScreen({navigation}) {
                 style={styles.tinyLogo}
                 source={wallpaper}
                 >
-                    <Text style={{fontSize:25, color:'white', marginTop:220, fontWeight:'bold', textAlign:'center'}}>A HOME MADE</Text>
+                    <Text style={{fontSize:25, color:'white', marginTop:200, fontWeight:'bold', textAlign:'center'}}>A HOME MADE</Text>
                     <Text style={{fontSize:40, color:'white', fontWeight:'bold', textAlign:'center'}}>~ CAKE ~</Text>
                     <Text style={{fontSize:13, color:'white', fontWeight:'bold', textAlign:'center'}}>MAKES ANY OCCATION FEEL</Text>
                     <Text style={{fontSize:25, color:'white', fontWeight:'bold', textAlign:'center'}}>MORE JOYFULL</Text>
@@ -33,10 +33,11 @@ export default function HomeScreen({navigation}) {
             </View>
 
             <View>
-                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center', marginTop:40}}>OUR PRODUCTS</Text>
+                <Text style={{fontSize:20, color:'black', fontWeight:'bold', textAlign:'center', marginTop:20}}>OUR PRODUCTS</Text>
             </View>
 
             <View style={{marginBottom:40}}>
+            <SafeAreaView>
                 <FlatList 
                 data = {filterData}
                 horizontal = {true}
@@ -61,9 +62,10 @@ export default function HomeScreen({navigation}) {
                     </View>
                 )}
                 />
+                </SafeAreaView>
 
             </View>
-        </ScrollView>
+        </SafeAreaView>
         </View>
     )
 }
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
 
     tinyLogo: {
         width: '100%',
-        height: 400,
+        height: 360,
         alignItems:'center',
         justifyContent:'center',
       },
